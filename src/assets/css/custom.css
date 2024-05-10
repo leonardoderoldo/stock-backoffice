@@ -1,0 +1,9 @@
+.login-logo {
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.login-logo > img {
+	height: 150px;
+}
