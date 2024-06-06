@@ -3,6 +3,21 @@
 	"version": "0.1.0",
 	"private": true,
 	"main": "public/electron.js",
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject",
+		"dev": "concurrently -k \"BROWSER=none yarn start\" \"yarn:electron\"",
+		"electron": "wait-on tcp:3333 && electron .",
+		"package": "react-scripts build && electron-forge package",
+		"make-mac": "react-scripts build && electron-forge make --platform darwin",
+		"make-linux": "react-scripts build && electron-forge make --platform linux",
+		"make": "react-scripts build && electron-forge make",
+		"electron:serve": "concurrently\"\" -k \"cross-env BROWSER=none yarn start \" \"yarn electron:start\"",
+		"electron:build": "yarn build && electron-builder -c.extraMetadata.main=build/electron.js",
+		"electron:start": "wait-on tcp:3333 && electron ."
+	},
 	"dependencies": {
 		"@electron/remote": "^2.1.2",
 		"@lottiefiles/react-lottie-player": "^3.5.3",
@@ -37,21 +52,6 @@
 		"typescript": "^5.4.5",
 		"web-vitals": "^3.5.2",
 		"yup": "^1.4.0"
-	},
-	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"dev": "concurrently -k \"BROWSER=none yarn start\" \"yarn:electron\"",
-		"electron": "wait-on tcp:3333 && electron .",
-		"package": "react-scripts build && electron-forge package",
-		"make-mac": "react-scripts build && electron-forge make --platform darwin",
-		"make-linux": "react-scripts build && electron-forge make --platform linux",
-		"make": "react-scripts build && electron-forge make",
-		"electron:serve": "concurrently\"\" -k \"cross-env BROWSER=none yarn start \" \"yarn electron:start\"",
-		"electron:build": "yarn build && electron-builder -c.extraMetadata.main=build/electron.js",
-		"electron:start": "wait-on tcp:3333 && electron ."
 	},
 	"build": {
 		"extends": null,
@@ -89,7 +89,15 @@
 		"cross-env": "^7.0.3",
 		"electron": "^30.0.3",
 		"electron-builder": "^24.13.3",
+		"electron-packager": "^17.1.2",
+		"eslint": "^9.4.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-import": "^2.29.1",
+		"eslint-plugin-jsx-a11y": "^6.8.0",
+		"eslint-plugin-react": "^7.34.2",
+		"eslint-plugin-react-hooks": "^4.6.2",
 		"prettier": "^3.2.5",
+		"react-inject-env": "^2.1.0",
 		"wait-on": "^7.2.0"
 	},
 	"resolutions": {

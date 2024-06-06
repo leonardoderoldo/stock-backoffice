@@ -1,7 +1,7 @@
 import RootContext from './root'
 import EmployeeContext from './employee'
-// import SchoolContext from './school'
+import RestaurantContext from './restaurant'
 // import ModalContext from './modal'
 // import InviteStatusEnum from './inviteStatusEnum'
 
-export { RootContext, EmployeeContext }
+export { RootContext, EmployeeContext, RestaurantContext }

@@ -1,12 +1,12 @@
 import jwtDecode from 'jwt-decode'
-import { toast } from 'react-hot-toast'
 import { createContext, useEffect, useState } from 'react'
-import { EmployeeServices } from '../services'
+import { toast } from 'react-hot-toast'
+import { EmployeeServices, WorkflowServices } from '../services'
 
 import AsyncLocalStorage from '../utils/asyncLocalStorage'
 
 import { moment } from '../configs'
-import { AsyncStorageEnum, TelasEnum } from '../domains'
+import { AsyncStorageEnum, JobEnum, TelasEnum } from '../domains'
 import { removeFormatDocument } from '../utils'
 import { cifra } from '../utils/crypt'
 
@@ -32,23 +32,19 @@ const EmployeeContext = createContext({
 export const EmployeeProvider = ({ children }) => {
 	const [isLogged, setIsLogged] = useState()
 	const [authorities, setAuthorities] = useState()
-	const [chooseSchoolData, setChooseSchoolData] = useState()
 	const [employee, setEmployee] = useState()
 	const [nextSteps, setNextSteps] = useState([])
-	const [showModalSelectSchool, setShowModalSelectSchool] = useState(false)
 
-	const setIsLoading = () => {
-		console.log('setIsLoading', chooseSchoolData, showModalSelectSchool)
-	}
+	const setIsLoading = () => {}
 
 	const checkGrants = (neededGrants = []) => {
 		let hasGrant = false
-		// const jobFunction = JobEnum[employee?.jobFunction]
-		// if (employee?.relation === 'OWNER' || jobFunction === JobEnum.ADMINISTRATOR) {
-		// 	hasGrant = true
-		// } else {
-		// 	hasGrant = neededGrants.includes(jobFunction)
-		// }
+		const jobFunction = JobEnum[employee?.jobFunction]
+		if (employee?.relation === 'OWNER' || jobFunction === JobEnum.ADMINISTRATOR) {
+			hasGrant = true
+		} else {
+			hasGrant = neededGrants.includes(jobFunction)
+		}
 		return hasGrant
 	}
 
@@ -57,19 +53,19 @@ export const EmployeeProvider = ({ children }) => {
 			checkIsLogged()
 				.then((isLogguedLocal) => {
 					if (isLogguedLocal) {
-						// WorkflowServices.getSteps()
-						// 	.then(async (result) => {
-						// 		if (result == null) result = []
-						// 		AsyncLocalStorage.setItem(AsyncStorageEnum.NEXT_STEPS, JSON.stringify(result))
-						// setNextSteps(result)
-						resolve({
-							// data: result,
-							isLoggued: isLogguedLocal
-						})
-						// })
-						// .catch((err) => {
-						// 	reject(err, false)
-						// })
+						WorkflowServices.getSteps()
+							.then(async (result) => {
+								if (result == null) result = []
+								AsyncLocalStorage.setItem(AsyncStorageEnum.NEXT_STEPS, JSON.stringify(result))
+								setNextSteps(result)
+								resolve({
+									data: result,
+									isLoggued: isLogguedLocal
+								})
+							})
+							.catch((err) => {
+								reject(err, false)
+							})
 					} else {
 						setNextSteps([])
 						resolve({ data: [], isLoggued: false })
@@ -101,75 +97,56 @@ export const EmployeeProvider = ({ children }) => {
 		})
 	}
 
-	const login = (cpf, password, showLoading = true, school_id) => {
+	const login = (email, password, showLoading = true) => {
 		return new Promise((resolve, reject) => {
 			if (showLoading) setIsLoading(true)
 			logout().then(async () => {
-				const cpfForm = removeFormatDocument(cpf)
 				const passForm = cifra(password)
 				AsyncLocalStorage.getItem(AsyncStorageEnum.MESSAGE_CODE)
 					.then((token) => {
-						AsyncLocalStorage.getItem(AsyncStorageEnum.SCHOOL_ID).then((schoolId) => {
-							EmployeeServices.login({
-								username: cpfForm,
-								password: passForm,
-								schoolId: school_id || schoolId,
-								gcmToken: token
-							})
-								.then(async (result) => {
-									var decoded = jwtDecode(result.authorization)
-									setAuthorities(decoded.authorities)
-									AsyncLocalStorage.setItem(
-										AsyncStorageEnum.AUTHORITIES,
-										JSON.stringify(decoded.authorities)
-									)
-									AsyncLocalStorage.setItem(AsyncStorageEnum.ACCESS_TOKEN, result.authorization)
-									AsyncLocalStorage.setItem(
-										AsyncStorageEnum.REFRESH_TOKEN,
-										result.refreshAuthorization
-									)
-									AsyncLocalStorage.setItem(AsyncStorageEnum.EXPIRES_AT, result.expiresAt)
-									AsyncLocalStorage.setItem(AsyncStorageEnum.REFRESH_EXPIRES_AT, result.refreshAt)
-									AsyncLocalStorage.setItem(AsyncStorageEnum.USER, JSON.stringify(result.employee))
-									if (result.school) {
-										window.school = result.school
-										AsyncLocalStorage.setItem(
-											AsyncStorageEnum.SCHOOL,
-											JSON.stringify(result.school)
-										)
-									}
-									checkIsLogged()
-										.then((isLogguedLocal) => {
-											getEmployee().then(() => {
-												setIsLoading(false)
-												resolve(result, isLogguedLocal)
-											})
-										})
-										.catch((err) => {
-											setIsLoading(false)
-											throw err
-										})
-								})
-								.catch((err) => {
-									setIsLoading(false)
-									if (Array.isArray(err?.data)) {
-										setShowModalSelectSchool(true)
-										setChooseSchoolData({
-											cpf: cpfForm,
-											password: password,
-											schools: err?.data
-										})
-									} else {
-										reject(err)
-										if (!!err && !!err.message) {
-											toast.error(err.message)
-										} else {
-											toast.error('Ocorreu um erro, tente novamente mais tarde.')
-										}
-										setIsLoading(false)
-									}
-								})
+						EmployeeServices.login({
+							username: email,
+							password: passForm,
+							gcmToken: token
 						})
+							.then(async (result) => {
+								var decoded = jwtDecode(result.authorization)
+								setAuthorities(decoded.authorities)
+								AsyncLocalStorage.setItem(
+									AsyncStorageEnum.AUTHORITIES,
+									JSON.stringify(decoded.authorities)
+								)
+								AsyncLocalStorage.setItem(AsyncStorageEnum.ACCESS_TOKEN, result.authorization)
+								AsyncLocalStorage.setItem(AsyncStorageEnum.REFRESH_TOKEN, result.refreshAuthorization)
+								AsyncLocalStorage.setItem(AsyncStorageEnum.EXPIRES_AT, result.expiresAt)
+								AsyncLocalStorage.setItem(AsyncStorageEnum.REFRESH_EXPIRES_AT, result.refreshAt)
+								AsyncLocalStorage.setItem(AsyncStorageEnum.USER, JSON.stringify(result.employee))
+								if (result.school) {
+									window.school = result.school
+									AsyncLocalStorage.setItem(AsyncStorageEnum.SCHOOL, JSON.stringify(result.school))
+								}
+								checkIsLogged()
+									.then((isLogguedLocal) => {
+										getEmployee().then(() => {
+											setIsLoading(false)
+											resolve(result, isLogguedLocal)
+										})
+									})
+									.catch((err) => {
+										setIsLoading(false)
+										throw err
+									})
+							})
+							.catch((err) => {
+								setIsLoading(false)
+								reject(err)
+								if (!!err && !!err.message) {
+									toast.error(err.message)
+								} else {
+									toast.error('Ocorreu um erro, tente novamente mais tarde.')
+								}
+								setIsLoading(false)
+							})
 					})
 					.catch((err) => {
 						setIsLoading(false)
@@ -231,10 +208,9 @@ export const EmployeeProvider = ({ children }) => {
 	const activate = (values = {}, showLoading = true) => {
 		return new Promise((resolve, reject) => {
 			if (showLoading) setIsLoading(true)
-			const cpf = removeFormatDocument(values.cpf)
 			const pass = cifra(values.password)
 			EmployeeServices.activate({
-				cpf: cpf,
+				email: values.email,
 				code: values.token,
 				password: pass
 			})

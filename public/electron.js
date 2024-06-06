@@ -13,8 +13,12 @@ function createWindow() {
 	const { width, height } = primaryDisplay.workAreaSize
 
 	mainWindow = new BrowserWindow({
+		titleBarStyle: 'hidden',
 		width: width,
 		height: height,
+		title: 'Stock',
+		// backgroundColor: '#312450',
+		icon: path.join(__dirname, './escola_na_mao'),
 		webPreferences: {
 			nodeIntegration: true
 		}

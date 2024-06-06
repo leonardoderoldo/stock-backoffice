@@ -1,0 +1,38 @@
+{
+	"extends": [
+		"eslint:recommended",
+		"plugin:import/errors",
+		"plugin:react/recommended",
+		"plugin:jsx-a11y/recommended",
+		"plugin:react-hooks/recommended",
+		"prettier"
+	],
+	"rules": {
+		"react/prop-types": "off",
+		"react/jsx-uses-react": "off",
+		"react/react-in-jsx-scope": "off",
+		"react/self-closing-comp": "warn",
+		"react-hooks/exhaustive-deps": "warn"
+		// "react/jsx-first-prop-new-line": [1, "multiline"],
+		// "react/jsx-max-props-per-line": [1, { "maximum": 1 }]
+	},
+	"plugins": ["react", "import", "jsx-a11y", "react-hooks"],
+	"parserOptions": {
+		"ecmaVersion": 2021,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+	"env": {
+		"es6": true,
+		"browser": true,
+		"jest": true,
+		"node": true
+	},
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	}
+}

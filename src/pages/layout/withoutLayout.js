@@ -1,12 +1,13 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 
-// import { EmployeeContext } from '../../contexts'
+import { EmployeeContext } from '../../contexts'
+import { useContext } from 'react'
 
 export default function WithoutLayout() {
 	const navigate = useNavigate()
 
 	const pathname = window.location.pathname
-	const { isLogged } = { isLogged: false } //useContext(EmployeeContext)
+	const { isLogged } = useContext(EmployeeContext)
 
 	if (!!isLogged && pathname === '/') {
 		navigate('/dashboard')

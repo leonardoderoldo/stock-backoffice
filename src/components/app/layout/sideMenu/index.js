@@ -10,8 +10,8 @@ const SideMenu = ({ disableMenu = false }) => {
 	return (
 		<aside className="main-sidebar sidebar-dark-primary elevation-4">
 			<div className="brand-link">
-				<img src={images.logo} alt="Escola na mão" className="brand-image" />
-				<span className="brand-text font-weight-light">ESCOLA NA MÃO</span>
+				<img src={images.logo} alt="" className="brand-image" />
+				<span className="brand-text font-weight-light">STOCK DELIVERY</span>
 			</div>
 			{!disableMenu && (
 				<div className="sidebar">
@@ -54,9 +54,7 @@ const SideMenu = ({ disableMenu = false }) => {
 										<a
 											onClick={() => openMenu(e)}
 											href={
-												!!e.subItems && e.subItems?.length > 0
-													? 'javascript:void(0)'
-													: e.link
+												!!e.subItems && e.subItems?.length > 0 ? 'javascript:void(0)' : e.link
 											}
 											className={classNames([
 												'nav-link',
@@ -69,9 +67,7 @@ const SideMenu = ({ disableMenu = false }) => {
 											<p>
 												{e.name}
 												{!!e.widget && (
-													<span
-														className={`right badge badge-${e.widget?.badge}`}
-													>
+													<span className={`right badge badge-${e.widget?.badge}`}>
 														{e.widget?.text}
 													</span>
 												)}
@@ -94,12 +90,7 @@ const SideMenu = ({ disableMenu = false }) => {
 																	}
 																])}
 															>
-																<i
-																	className={classNames([
-																		'nav-icon',
-																		se.icon
-																	])}
-																/>
+																<i className={classNames(['nav-icon', se.icon])} />
 																<p>{se.name}</p>
 															</a>
 														</li>

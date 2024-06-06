@@ -18,6 +18,7 @@ const SAFE_PATH = [
 	'/employees/password/change',
 	'/employees/password/confirmation-code',
 	'/employees/password/confirmation-data',
+	'/partner/restaurant/signup',
 	REFRESH_PATH
 ]
 
@@ -42,6 +43,7 @@ api.addAsyncRequestTransform(async (request) => {
 	var isAfter = moment(now).isAfter(expiresMoment)
 
 	if (isAfter && !safePath && !isRefreshPath) {
+		alert('TESTE')
 		await EmployeeServices.refresh().catch((err) => {
 			console.log('refresh_erro', err)
 		})

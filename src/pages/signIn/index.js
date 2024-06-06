@@ -2,7 +2,7 @@ import { useFormik } from 'formik'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Buttom, InputMask, InputText } from '../../components/global'
+import { Buttom, InputText } from '../../components/global'
 
 import { images } from '../../configs'
 // import { EmployeeContext } from '../../contexts'
@@ -30,7 +30,8 @@ const SignIn = () => {
 	const formik = useFormik({
 		initialValues: {},
 		onSubmit: (values) => {
-			login(values.cpf, values.password).then(() => {
+			login(values.email, values.password).then(() => {
+				alert('GOTO')
 				goTo()
 			})
 		}
@@ -51,14 +52,13 @@ const SignIn = () => {
 
 						<form onSubmit={formik.handleSubmit}>
 							<div className="input-group mb-3">
-								<InputMask
-									id="cpf"
-									name="cpf"
-									mask="999.999.999-99"
-									placeholder="CPF"
-									icon={'fa-id-card'}
-									value={formik.values.cpf}
-									onChange={formik.handleChange('cpf')}
+								<InputText
+									id="email"
+									name="email"
+									placeholder="E-Mail"
+									icon={'fa-at'}
+									value={formik.values.email}
+									onChange={formik.handleChange('email')}
 								/>
 							</div>
 
