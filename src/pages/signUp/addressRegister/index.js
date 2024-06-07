@@ -45,7 +45,7 @@ const AddressRegister = () => {
 
 	return (
 		<div>
-			<p className="login-box-msg">Informações do endereço</p>
+			<p className="login-box-msg">LOCALIZAÇÃO</p>
 			<form onSubmit={formik.handleSubmit}>
 				<Row>
 					<Col class="col-md-12 mb-3">
@@ -121,6 +121,21 @@ const AddressRegister = () => {
 							onChange={formik.handleChange('neighborhood')}
 						/>
 					</Col>
+					<Col class="col-md-12 mb-3">
+						<InputText
+							id="city"
+							name="city"
+							type="city"
+							icon={'fa-map-location-dot'}
+							disabled={enderecoDisabilitado}
+							placeholder="Cidade"
+							value={formik.values.city}
+							error={formik.errors.city}
+							onChange={formik.handleChange('city')}
+						/>
+					</Col>
+				</Row>
+				<Row>
 					<Col class="col-md-12 mb-3">
 						<Select
 							label={'Estado'}

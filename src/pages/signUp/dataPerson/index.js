@@ -39,7 +39,6 @@ const DataPerson = () => {
 		AsyncLocalStorage.getItem(AsyncStorageEnum.RESTAURANT_SIGNUP).then((result) => {
 			if (result) {
 				formik.setValues(JSON.parse(atob(result)))
-				console.log('TESTE', JSON.parse(atob(result)))
 			}
 		})
 	}, [])

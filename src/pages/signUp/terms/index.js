@@ -317,7 +317,7 @@ const Terms = () => {
 							</p>
 						</div>
 						<div className="row">
-							<div className="col-12">
+							<div className="col-12 pt-3">
 								<Buttom submit disabled={btnNextDisabled} class="float-right">
 									Aceitar os termos
 								</Buttom>

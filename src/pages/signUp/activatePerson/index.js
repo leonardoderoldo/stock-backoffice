@@ -11,9 +11,21 @@ import { AsyncStorageEnum } from '../../../domains'
 
 const ActivatePerson = () => {
 	const navigate = useNavigate()
-	const { activate, login } = useContext(EmployeeContext)
+	const { activate, login, getRedirectPage } = useContext(EmployeeContext)
 
 	const [btnNextDisabled, setBtnNextDisabled] = useState(false)
+	const goTo = () => {
+		getRedirectPage().then(async (rResult) => {
+			const page = rResult.page
+			if (!rResult.isLoggued) {
+				setTimeout(() => {
+					goTo()
+				}, 2000)
+			} else {
+				navigate(page?.name)
+			}
+		})
+	}
 
 	const formik = useFormik({
 		initialValues: {},
@@ -26,7 +38,7 @@ const ActivatePerson = () => {
 							AsyncStorageEnum.RESTAURANT_SIGNUP,
 							btoa(JSON.stringify(values))
 						)
-						navigate('/sign-up/company')
+						goTo()
 					})
 					.catch(() => {
 						setBtnNextDisabled(false)
@@ -45,10 +57,10 @@ const ActivatePerson = () => {
 
 	return (
 		<div>
-			<p className="login-box-msg">Validação dos dados</p>
+			<p className="login-box-msg">VALIDAÇÃO DOS DADOS</p>
 			<p className="text-center">
 				<small>
-					Digite o token enviado pela escola, <br />
+					Digite o token enviado para o e-mail cadastrado, <br />
 					para acesso ao App.
 				</small>
 			</p>

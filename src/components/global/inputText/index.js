@@ -1,21 +1,15 @@
 import classNames from 'classnames'
 import { colors } from '../../../configs'
 
-const InputText = ({
-	type = 'text',
-	id,
-	name,
-	disabled = false,
-	icon,
-	error,
-	value,
-	onChange = () => {},
-	...res
-}) => {
+const InputText = ({ type = 'text', id, name, disabled = false, icon, error, value, onChange = () => {}, ...res }) => {
 	const rand = Math.floor(Math.random())
 	return (
 		<>
-			<div className="input-group">
+			<div
+				className={classNames({
+					'input-group': !!icon
+				})}
+			>
 				<input
 					id={id}
 					name={name}
@@ -29,11 +23,7 @@ const InputText = ({
 				/>
 
 				{!!icon && (
-					<div
-						className="input-group-append"
-						data-target={`#${rand}`}
-						data-toggle="datetimepicker"
-					>
+					<div className="input-group-append" data-target={`#${rand}`} data-toggle="datetimepicker">
 						<div className="input-group-text">
 							<span className={classNames(['fas', icon])} />
 						</div>

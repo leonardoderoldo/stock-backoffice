@@ -31,7 +31,6 @@ const SignIn = () => {
 		initialValues: {},
 		onSubmit: (values) => {
 			login(values.email, values.password).then(() => {
-				alert('GOTO')
 				goTo()
 			})
 		}

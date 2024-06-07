@@ -15,7 +15,6 @@ const base_path = '/partner/restaurant'
 //#######################################################################
 
 export const create = (dto) => {
-	console.log('TESTE', dto)
 	return api
 		.post(`${base_path}/signup`, JSON.stringify(dto))
 		.then((response) => {
@@ -34,6 +33,34 @@ export const create = (dto) => {
 //#### UPDATES ##########################################################
 //#######################################################################
 //#######################################################################
+
+export const registerAddress = (dto) => {
+	return api
+		.put(`${base_path}/registries/address`, JSON.stringify(dto))
+		.then(async (response) => {
+			if (isSuccess(response, 201)) {
+				return response.data
+			}
+			return Promise.reject(response.data)
+		})
+		.catch((err) => {
+			return Promise.reject(err)
+		})
+}
+
+export const registerAccountBanking = (dto) => {
+	return api
+		.put(`${base_path}/registries/account-banking`, JSON.stringify(dto))
+		.then(async (response) => {
+			if (isSuccess(response, 201)) {
+				return response.data
+			}
+			return Promise.reject(response.data)
+		})
+		.catch((err) => {
+			return Promise.reject(err)
+		})
+}
 
 export const acceptTerms = (termVersion) => {
 	return api

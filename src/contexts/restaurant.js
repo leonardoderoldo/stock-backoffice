@@ -4,13 +4,16 @@ import { toast } from 'react-hot-toast'
 import RootContext from './root'
 
 import { moment } from '../configs'
-import { removeFormatDocument, removeFormatPhone } from '../utils'
+import { removeFormatCEP, removeFormatDocument, removeFormatPhone } from '../utils'
 import AsyncLocalStorage from '../utils/asyncLocalStorage'
 import { AsyncStorageEnum } from '../domains'
 import { RestaurantServices } from '../services'
 
 const RestaurantContext = createContext({
-	signUp: () => {}
+	signUp: () => {},
+	acceptTerms: () => {},
+	registerAddress: () => {},
+	registerAccountBanking: () => {}
 })
 
 export const RestaurantProvider = ({ children }) => {
@@ -61,10 +64,82 @@ export const RestaurantProvider = ({ children }) => {
 		})
 	}
 
+	const registerAddress = (values = {}, showLoading = true) => {
+		return new Promise((resolve, reject) => {
+			if (showLoading) setIsLoading(true)
+			const dto = { ...values, cep: removeFormatCEP(values.cep) }
+			RestaurantServices.registerAddress(dto)
+				.then((result) => {
+					setIsLoading(false)
+					resolve(result)
+					toast.success('Endereço salvo com sucesso!', 10000)
+				})
+				.catch((err) => {
+					setIsLoading(false)
+					reject(err)
+					if (!!err && !!err.message) {
+						toast.error(err.message, 8000)
+					} else {
+						toast.error('Ocorreu um erro, tente novamente mais tarde.')
+					}
+				})
+		})
+	}
+
+	const registerAccountBanking = (values = {}, showLoading = true) => {
+		return new Promise((resolve, reject) => {
+			if (showLoading) setIsLoading(true)
+			RestaurantServices.registerAccountBanking({
+				bankCode: values.bankCode,
+				agency: values.agency,
+				accountNumber: values.accountNumber,
+				verifyingDigit: values.verifyingDigit
+			})
+				.then((result) => {
+					setIsLoading(false)
+					resolve(result)
+					toast.success('Conta salva com sucesso!', 10000)
+				})
+				.catch((err) => {
+					setIsLoading(false)
+					reject(err)
+					if (!!err && !!err.message) {
+						toast.error(err.message, 8000)
+					} else {
+						toast.error('Ocorreu um erro, tente novamente mais tarde.')
+					}
+				})
+		})
+	}
+
+	const acceptTerms = (termVersion, showLoading = true) => {
+		return new Promise((resolve, reject) => {
+			if (showLoading) setIsLoading(true)
+			RestaurantServices.acceptTerms(termVersion)
+				.then((result) => {
+					setIsLoading(false)
+					toast.success('Termos aceito com sucesso!', 10000)
+					resolve(result)
+				})
+				.catch((err) => {
+					setIsLoading(false)
+					reject(err)
+					if (!!err && !!err.message) {
+						toast.error(err.message)
+					} else {
+						toast.error('Ocorreu um erro, tente novamente mais tarde.')
+					}
+				})
+		})
+	}
+
 	return (
 		<RestaurantContext.Provider
 			value={{
-				signUp
+				signUp,
+				acceptTerms,
+				registerAddress,
+				registerAccountBanking
 			}}
 		>
 			{children}

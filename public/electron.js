@@ -13,7 +13,8 @@ function createWindow() {
 	const { width, height } = primaryDisplay.workAreaSize
 
 	mainWindow = new BrowserWindow({
-		titleBarStyle: 'hidden',
+		// titleBarStyle: 'hidden',
+		titleBarOverlay: true,
 		width: width,
 		height: height,
 		title: 'Stock',

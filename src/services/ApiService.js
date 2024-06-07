@@ -43,7 +43,6 @@ api.addAsyncRequestTransform(async (request) => {
 	var isAfter = moment(now).isAfter(expiresMoment)
 
 	if (isAfter && !safePath && !isRefreshPath) {
-		alert('TESTE')
 		await EmployeeServices.refresh().catch((err) => {
 			console.log('refresh_erro', err)
 		})

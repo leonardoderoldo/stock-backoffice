@@ -40,7 +40,7 @@ export const EmployeeProvider = ({ children }) => {
 	const checkGrants = (neededGrants = []) => {
 		let hasGrant = false
 		const jobFunction = JobEnum[employee?.jobFunction]
-		if (employee?.relation === 'OWNER' || jobFunction === JobEnum.ADMINISTRATOR) {
+		if (employee?.relation === 'OWNER' || jobFunction === JobEnum.STORE_MANAGEMENT) {
 			hasGrant = true
 		} else {
 			hasGrant = neededGrants.includes(jobFunction)
