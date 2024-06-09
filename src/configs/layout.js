@@ -2,144 +2,158 @@ const MENU_ITEMS = [
 	{
 		id: 1,
 		icon: 'fal fa-tachometer-alt',
-		sideBar: '',
-		title: 'Painel',
 		name: 'Dashboard',
 		link: '/dashboard',
 		active: true
-		// component: () => <Dashboard />
 	},
 	{
 		id: 2,
-		icon: 'fal fa-sitemap',
-		sideBar: '',
-		name: 'Organização',
-		link: '/organization',
-		active: false,
-		subItems: [
-			{
-				id: 1,
-				icon: 'fal fa-landmark',
-				name: 'Unidades',
-				link: '/business-unit',
-				active: false
-				// component: () => <Dashboard />
-			},
-			{
-				id: 2,
-				icon: 'fal fa-screen-users',
-				name: 'Cursos / Turmas',
-				link: '/course',
-				active: false
-				// component: () => <Courses />
-			},
-			{
-				id: 3,
-				icon: 'fal fa-chalkboard-user',
-				name: 'Funcionários',
-				link: '/employees',
-				active: false
-				// widget: {
-				// 	text: 'New',
-				// 	badge: 'danger'
-				// }
-				// component: () => <Employees />
-			},
-			{
-				id: 4,
-				icon: 'fal fa-user-graduate',
-				name: 'Alunos',
-				link: '/students',
-				active: false
-				// component: () => <Students />
-			}
-		]
+		header: true,
+		name: 'Desempenho e Vendas'
+	},
+	{
+		id: 3,
+		icon: 'fal fa-chart-line',
+		name: 'Desempenho',
+		link: '/performance',
+		active: false
+	},
+	{
+		id: 3,
+		icon: 'fal fa-receipt',
+		name: 'Pedidos',
+		link: '/orders',
+		active: false
 	},
 	{
 		id: 3,
 		icon: 'fal fa-dollar-sign',
-		sideBar: '',
-		title: 'Pagamentos',
-		name: 'Pagamentos',
-		link: '/payments',
-		active: false,
-		widget: {
-			text: 'Novo',
-			badge: 'warning'
-		}
-	},
-	{
-		id: 4,
-		icon: 'fal fa-images',
-		name: 'Mural de fotos',
-		link: '/photo-gallery',
+		name: 'Financeiro',
+		link: '/revenue',
 		active: false
-		// component: () => <Dashboard />
 	},
 	{
-		id: 4,
-		icon: 'fal fa-bullhorn',
-		name: 'Comunicados',
-		link: '/announcements',
+		id: 3,
+		icon: 'fal fa-star',
+		name: 'Avaliações',
+		link: '/reviews',
 		active: false
-		// component: () => <Dashboard />
 	},
 	{
-		id: 4,
-		icon: 'fal fa-messages',
-		name: 'Mensagens',
-		link: '/chat',
-		active: false
-		// component: () => <Dashboard />
+		id: 2,
+		header: true,
+		name: 'Configurações da loja'
 	},
 	{
-		id: 4,
-		icon: 'fal fa-square-poll-vertical',
-		name: 'Enquetes',
-		link: '/surveys'
-		// component: () => <Dashboard />
-	},
-	{
-		id: 4,
-		icon: 'fal fa-utensils',
-		name: 'Cardápios',
+		id: 1,
+		icon: 'fal fa-burger-soda',
+		name: 'Cardápio',
 		link: '/menu',
 		active: false
 		// component: () => <Dashboard />
 	},
 	{
-		id: 4,
-		icon: 'fal fa-chart-line-up',
-		name: 'Relatórios',
-		link: '/reports',
+		id: 2,
+		icon: 'fal fa-map-location-dot',
+		name: 'Áreas de entrega',
+		link: '/merchant-delivery-area',
 		active: false
-		// component: () => <Dashboard />
 	},
 	{
 		id: 3,
-		icon: 'fal fa-gear',
-		name: 'Configurações',
-		link: '/settings',
+		icon: 'fal fa-clock',
+		name: 'Horário',
+		link: '/opening-hours/schedules',
+		active: false
+		// component: () => <Students />
+	},
+	{
+		id: 4,
+		icon: 'far fa-credit-card',
+		name: 'Formas de pagamento',
+		link: '/payment-methods',
+		active: false
+		// component: () => <Students />
+	},
+	{
+		id: 3,
+		icon: 'fal fa-store',
+		name: 'Minha loja',
+		link: '/payments',
 		active: false,
-		// component: () => <Dashboard />,
+		widget: {
+			text: 'Novo',
+			badge: 'warning'
+		},
 		subItems: [
 			{
 				id: 1,
-				icon: 'fal fa-screwdriver-wrench',
-				name: 'Grupos de conversa',
-				link: '/chat-groups',
+				icon: 'fal fa-store',
+				name: 'Loja',
+				link: '/profile/restaurant',
 				active: false
 				// component: () => <Dashboard />
 			},
 			{
-				id: 1,
-				icon: 'fal fa-screwdriver-wrench',
-				name: 'Acompanhamento',
-				link: '/appointment-book',
+				id: 2,
+				icon: 'fal fa-map-location-dot',
+				name: 'Endereço',
+				link: '/profile/address',
 				active: false
-				// component: () => <Dashboard />
+			},
+			{
+				id: 3,
+				icon: 'fal fa-clipboard-user',
+				name: 'Gestão de acessos',
+				link: '/profile/access-management',
+				active: false
+			},
+			{
+				id: 4,
+				icon: 'fal fa-map-location-dot',
+				name: 'Contato',
+				link: '/communications',
+				active: false
 			}
 		]
+	},
+	{
+		id: 4,
+		name: 'Marketing',
+		header: true
+	},
+	{
+		id: 4,
+		icon: 'fal fa-users',
+		name: 'Clientes',
+		link: '/clients',
+		active: false
+	},
+	{
+		id: 4,
+		icon: 'fal fa-badge-percent',
+		name: 'Promoções',
+		link: '/promotions',
+		active: false
+	},
+	{
+		id: 4,
+		icon: 'fal fa-bullhorn',
+		name: 'Anúncios',
+		link: '/ads',
+		active: false
+	},
+	{
+		id: 4,
+		name: 'Serviços e Produtos',
+		header: true
+	},
+	{
+		id: 4,
+		icon: 'fal fa-grid-2',
+		name: 'Integrações',
+		link: '/integrations',
+		active: false
 	}
 ]
 

@@ -1,13 +1,7 @@
 import { useEffect } from 'react'
 import classNames from 'classnames'
 
-const ContentDefault = ({
-	title = '',
-	breads = '',
-	full = false,
-	colapsedMenu = false,
-	...props
-}) => {
+const ContentDefault = ({ title = '', breads = '', full = false, colapsedMenu = false, ...props }) => {
 	useEffect(() => {
 		if (colapsedMenu) {
 			setTimeout(() => {
@@ -28,7 +22,7 @@ const ContentDefault = ({
 			<section className="content-header">
 				<div className="container-fluid">
 					<div className="row mb-2">
-						<div className="col-sm-6">
+						<div className="col-sm-6 pl-3">
 							<h1>{title}</h1>
 						</div>
 						<div className="col-sm-6">
@@ -37,7 +31,7 @@ const ContentDefault = ({
 					</div>
 				</div>
 			</section>
-			<section className="content pb-3">{props.children}</section>
+			<section className="content pl-4 pr-4 pb-3">{props.children}</section>
 		</div>
 	)
 }

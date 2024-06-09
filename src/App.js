@@ -1,10 +1,12 @@
 import { BrowserRouter as Router } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 
 import Routers from './routes'
+
 import { EmployeeProvider } from './contexts/employee'
 import { RestaurantProvider } from './contexts/restaurant'
 import { RootProvider } from './contexts/root'
-import { Toaster } from 'react-hot-toast'
+import { ModalProvider } from './contexts/modal'
 
 function App() {
 	return (
@@ -12,7 +14,9 @@ function App() {
 			<RootProvider>
 				<EmployeeProvider>
 					<RestaurantProvider>
-						<Routers />
+						<ModalProvider>
+							<Routers />
+						</ModalProvider>
 					</RestaurantProvider>
 				</EmployeeProvider>
 			</RootProvider>

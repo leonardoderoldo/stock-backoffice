@@ -7,13 +7,14 @@ import { moment } from '../configs'
 import { removeFormatCEP, removeFormatDocument, removeFormatPhone } from '../utils'
 import AsyncLocalStorage from '../utils/asyncLocalStorage'
 import { AsyncStorageEnum } from '../domains'
-import { RestaurantServices } from '../services'
+import { CatalogServices, RestaurantServices } from '../services'
 
 const RestaurantContext = createContext({
 	signUp: () => {},
 	acceptTerms: () => {},
 	registerAddress: () => {},
-	registerAccountBanking: () => {}
+	registerAccountBanking: () => {},
+	getCatalog: () => {}
 })
 
 export const RestaurantProvider = ({ children }) => {
@@ -133,13 +134,34 @@ export const RestaurantProvider = ({ children }) => {
 		})
 	}
 
+	const getCatalog = (showLoading = true) => {
+		return new Promise((resolve, reject) => {
+			if (showLoading) setIsLoading(true)
+			CatalogServices.get()
+				.then((result) => {
+					setIsLoading(false)
+					resolve(result)
+				})
+				.catch((err) => {
+					setIsLoading(false)
+					reject(err)
+					if (!!err && !!err.message) {
+						toast.error(err.message)
+					} else {
+						toast.error('Ocorreu um erro, tente novamente mais tarde.')
+					}
+				})
+		})
+	}
+
 	return (
 		<RestaurantContext.Provider
 			value={{
 				signUp,
 				acceptTerms,
 				registerAddress,
-				registerAccountBanking
+				registerAccountBanking,
+				getCatalog
 			}}
 		>
 			{children}

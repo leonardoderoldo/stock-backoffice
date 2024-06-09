@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { useContext } from 'react'
 
-import { images } from '../../../../configs'
+import { colors, images, metrics } from '../../../../configs'
 import { RootContext } from '../../../../contexts'
 
 const SideMenu = ({ disableMenu = false }) => {
@@ -41,64 +41,12 @@ const SideMenu = ({ disableMenu = false }) => {
 						>
 							{menuItems.map((e, i) => {
 								return (
-									<li
-										key={`li_${i}`}
-										className={classNames([
-											'nav-item',
-											{
-												'menu-is-opening': e.opened,
-												'menu-open': e.opened
-											}
-										])}
-									>
-										<a
-											onClick={() => openMenu(e)}
-											href={
-												!!e.subItems && e.subItems?.length > 0 ? 'javascript:void(0)' : e.link
-											}
-											className={classNames([
-												'nav-link',
-												{
-													active: e.active
-												}
-											])}
-										>
-											<i className={classNames(['nav-icon', e.icon])} />
-											<p>
-												{e.name}
-												{!!e.widget && (
-													<span className={`right badge badge-${e.widget?.badge}`}>
-														{e.widget?.text}
-													</span>
-												)}
-											</p>
-											{!!e.subItems && e.subItems?.length > 0 && (
-												<i className="right fas fa-angle-left" />
-											)}
-										</a>
-										{!!e.subItems && e.subItems?.length > 0 && (
-											<ul className="nav nav-treeview">
-												{e.subItems?.map((se, si) => {
-													return (
-														<li key={`se_${si}`} className="nav-item">
-															<a
-																href={`${e.link}${se.link}`}
-																className={classNames([
-																	'nav-link',
-																	{
-																		active: se.active
-																	}
-																])}
-															>
-																<i className={classNames(['nav-icon', se.icon])} />
-																<p>{se.name}</p>
-															</a>
-														</li>
-													)
-												})}
-											</ul>
+									<>
+										{e.header && <ItemHeader key={`k_${i}`} item={e} />}
+										{!e.header && (
+											<MenuItem key={`k_${i}`} item={e} openMenu={(r) => openMenu(r)} />
 										)}
-									</li>
+									</>
 								)
 							})}
 						</ul>
@@ -106,6 +54,103 @@ const SideMenu = ({ disableMenu = false }) => {
 				</div>
 			)}
 		</aside>
+	)
+}
+
+const ItemHeader = ({ item = { name: '' } }) => {
+	return (
+		<>
+			<li
+				className="nav-header"
+				style={{ flex: 1, position: 'relative', justifyContent: 'center', alignItems: 'center' }}
+			>
+				<div
+					style={{
+						zIndex: -9999,
+						position: 'absolute',
+						width: '100%',
+						marginTop: 12,
+						borderWidth: 0,
+						borderColor: colors.whiteAlpha80,
+						borderTopWidth: 1,
+						borderBlockStyle: 'solid'
+					}}
+				></div>
+				<span style={{ backgroundColor: colors.primary, width: 'auto', paddingRight: metrics.paddingSmall }}>
+					{item.name}
+				</span>
+			</li>
+		</>
+	)
+}
+
+const MenuItem = ({
+	item = { name: '', opened: false, subItems: [], active: false, link: '', icon: '', widget: '' },
+	openMenu = () => {}
+}) => {
+	return (
+		<>
+			<li
+				className={classNames([
+					'nav-item',
+					{
+						'menu-is-opening': item.opened,
+						'menu-open': item.opened
+					}
+				])}
+			>
+				<a
+					onClick={() => openMenu(item)}
+					href={!!item.subItems && item.subItems?.length > 0 ? 'javascript:void(0)' : item.link}
+					className={classNames([
+						'nav-link',
+						{
+							active: item.active
+						}
+					])}
+				>
+					<i className={classNames(['nav-icon', item.icon])} />
+					<p>
+						{item.name}
+						{!!item.widget && (
+							<span className={`right mr-3 badge badge-${item.widget?.badge}`}>{item.widget?.text}</span>
+						)}
+					</p>
+					{!!item.subItems && item.subItems?.length > 0 && <i className="right fas fa-angle-left" />}
+				</a>
+
+				<SubMenus parentLink={item.link} subItems={item.subItems} />
+			</li>
+		</>
+	)
+}
+
+const SubMenus = ({ parentLink = {}, subItems = [] }) => {
+	return (
+		<>
+			{!!subItems && subItems?.length > 0 && (
+				<ul className="nav nav-treeview">
+					{subItems?.map((se, si) => {
+						return (
+							<li key={`se_${si}`} className="nav-item">
+								<a
+									href={`${parentLink}${se.link}`}
+									className={classNames([
+										'nav-link',
+										{
+											active: se.active
+										}
+									])}
+								>
+									<i className={classNames(['nav-icon', se.icon])} />
+									<p>{se.name}</p>
+								</a>
+							</li>
+						)
+					})}
+				</ul>
+			)}
+		</>
 	)
 }
 

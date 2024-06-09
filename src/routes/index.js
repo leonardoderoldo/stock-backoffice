@@ -1,7 +1,7 @@
 import { Routes } from 'react-router'
 import { Route } from 'react-router-dom'
 
-import { Dashboard, DataCompany, DataPerson, NotFoundLoggedOut, SignIn, SignUp, Terms } from '../pages'
+import { Dashboard, DataCompany, DataPerson, Menu, NotFoundLoggedOut, SignIn, SignUp, Terms } from '../pages'
 import ActivatePerson from '../pages/signUp/activatePerson'
 import AddressRegister from '../pages/signUp/addressRegister'
 
@@ -38,6 +38,7 @@ export default function Routers() {
 				</Route>
 				<Route element={<SecureDefaultLayout />}>
 					<Route path="dashboard" element={<Dashboard />} />
+					<Route path="menu" element={<Menu />} />
 				</Route>
 			</Routes>
 		</>
