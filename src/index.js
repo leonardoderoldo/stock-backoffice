@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom/client'
 import App from './App.js'
 import reportWebVitals from './reportWebVitals.js'
 
+import 'bootstrap/dist/css/bootstrap.min.css'
+import '../node_modules/admin-lte/dist/css/adminlte.min.css'
+
 import './assets/css/custom.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
