@@ -8,12 +8,20 @@ const ModalContext = createContext({
 
 export const ModalProvider = ({ children }) => {
 	//####################################################################################
+	//################ STATE #############################################################
+	//####################################################################################
+	//####################################################################################
+
+	const [currentCatalogId, setCurrentCatalogId] = useState()
+
+	//####################################################################################
 	//################ ACTIONS ###########################################################
 	//####################################################################################
 	//####################################################################################
 	const [showMenuCreate, setShowMenuCreate] = useState(false)
 
-	const openMenuCreate = () => {
+	const openMenuCreate = (catalogId) => {
+		setCurrentCatalogId(catalogId)
 		setShowMenuCreate(true)
 	}
 
@@ -24,7 +32,11 @@ export const ModalProvider = ({ children }) => {
 					openMenuCreate
 				}}
 			>
-				<ModalCategoryCreate show={showMenuCreate} onClose={() => setShowMenuCreate(false)} />
+				<ModalCategoryCreate
+					catalogId={currentCatalogId}
+					show={showMenuCreate}
+					onClose={() => setShowMenuCreate(false)}
+				/>
 				{children}
 			</ModalContext.Provider>
 		</>

@@ -1,8 +1,17 @@
 import * as Yup from 'yup'
 
-const cadastroValidacao = () => {
+const cadastroValidacao = (step) => {
 	return Yup.object().shape({
-		title: Yup.string().test('title_required', 'O título é obrigatória', (val) => {
+		template: Yup.string().test('template_required', 'O tipo da categoria é obrigatório', (val) => {
+			if (step !== 1) {
+				return true
+			}
+			return !!val
+		}),
+		name: Yup.string().test('name_required', 'O nome da categoria é obrigatório', (val) => {
+			if (step !== 2) {
+				return true
+			}
 			return !!val
 		})
 	})

@@ -28,6 +28,20 @@ export const get = () => {
 //#######################################################################
 //#######################################################################
 
+export const createCategory = (catalogId, dto) => {
+	return api
+		.post(`${base_path}/${catalogId}/category`, JSON.stringify(dto))
+		.then(async (response) => {
+			if (isSuccess(response, 201)) {
+				return response.data
+			}
+			return Promise.reject(response.data)
+		})
+		.catch((err) => {
+			return Promise.reject(err)
+		})
+}
+
 //#######################################################################
 //#######################################################################
 //#### UPDATES ##########################################################

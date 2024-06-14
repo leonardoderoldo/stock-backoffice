@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '../node_modules/admin-lte/dist/css/adminlte.min.css'
 
 import './assets/css/custom.css'
-
+5
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
 	<React.StrictMode>

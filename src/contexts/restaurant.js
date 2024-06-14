@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import RootContext from './root'
@@ -10,15 +10,23 @@ import { AsyncStorageEnum } from '../domains'
 import { CatalogServices, RestaurantServices } from '../services'
 
 const RestaurantContext = createContext({
+	catalog: [],
 	signUp: () => {},
 	acceptTerms: () => {},
 	registerAddress: () => {},
 	registerAccountBanking: () => {},
-	getCatalog: () => {}
+	getCatalog: () => {},
+	createCategory: () => {}
 })
 
 export const RestaurantProvider = ({ children }) => {
 	const { setIsLoading } = useContext(RootContext)
+
+	//####################################################################################
+	//################ STATES ############################################################
+	//####################################################################################
+	//####################################################################################
+	const [catalog, setCatalog] = useState({})
 
 	//####################################################################################
 	//################ FUNCTION ##########################################################
@@ -141,6 +149,7 @@ export const RestaurantProvider = ({ children }) => {
 				.then((result) => {
 					setIsLoading(false)
 					resolve(result)
+					setCatalog(result)
 				})
 				.catch((err) => {
 					setIsLoading(false)
@@ -154,14 +163,38 @@ export const RestaurantProvider = ({ children }) => {
 		})
 	}
 
+	const createCategory = (catalogId = '', data = {}, showLoading = true) => {
+		return new Promise((resolve, reject) => {
+			if (showLoading) setIsLoading(true)
+			CatalogServices.createCategory(catalogId, data)
+				.then(async (result) => {
+					toast.success('Categoria criada com sucesso!')
+					resolve(result)
+					setIsLoading(false)
+					getCatalog()
+				})
+				.catch((err) => {
+					if (err?.message) {
+						toast.error(err.message)
+					} else {
+						toast.error('Ocorreu um erro, tente novamente mais tarde.')
+					}
+					setIsLoading(false)
+					reject(err)
+				})
+		})
+	}
+
 	return (
 		<RestaurantContext.Provider
 			value={{
+				catalog,
 				signUp,
 				acceptTerms,
 				registerAddress,
 				registerAccountBanking,
-				getCatalog
+				getCatalog,
+				createCategory
 			}}
 		>
 			{children}
