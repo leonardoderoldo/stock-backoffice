@@ -11,7 +11,11 @@ export default function Step1({ formik = {} }) {
 						style={{
 							height: 210
 						}}
-						onClick={() => formik.setFieldValue('template', 'DEFAULT')}
+						onClick={() => {
+							formik.setFieldValue('template', 'DEFAULT').then(() => {
+								formik.handleSubmit()
+							})
+						}}
 					>
 						<div className="pv-3 d-flex flex-column justify-content-center align-items-center">
 							<i
@@ -32,7 +36,11 @@ export default function Step1({ formik = {} }) {
 						style={{
 							height: 210
 						}}
-						onClick={() => formik.setFieldValue('template', 'PIZZA')}
+						onClick={() => {
+							formik.setFieldValue('template', 'PIZZA').then(() => {
+								formik.handleSubmit()
+							})
+						}}
 					>
 						<div className="d-flex flex-column justify-content-center align-items-center">
 							<i

@@ -98,8 +98,8 @@ const ModalCategoryCreate = ({ show = false, catalogId = '', onChange = () => {}
 					</div>
 					<Pagination stepsSize={STEPS.length} step={currentStep} />
 					<div className="d-flex flex-row">
-						{currentStep < 3 && (
-							<Buttom submit class="float-right">
+						{currentStep < STEPS.length && (
+							<Buttom submit disabled={currentStep === STEPS.length} class="float-right">
 								Próximo
 							</Buttom>
 						)}
