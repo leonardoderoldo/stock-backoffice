@@ -4,5 +4,6 @@ import DaysOfWeek from './daysOfWeek'
 import JobEnum from './jobEnum'
 import Banks from './banks'
 import AsyncStorageEnum from './asyncStorageEnum'
+import ProductServingEnum from './productServingEnum'
 
-export { TelasEnum, StepsEnum, DaysOfWeek, AsyncStorageEnum, JobEnum, Banks }
+export { TelasEnum, StepsEnum, DaysOfWeek, AsyncStorageEnum, JobEnum, Banks, ProductServingEnum }

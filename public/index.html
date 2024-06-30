@@ -46,6 +46,8 @@
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- overlayScrollbars -->
   <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- Bootstrap Switch -->
+  <script src="plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
   <!-- AdminLTE App -->
   <script src="dist/js/adminlte.js"></script>
 
@@ -57,6 +59,18 @@
   <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
   <!-- ChartJS -->
   <script src="plugins/chart.js/Chart.min.js"></script>
+
+  <!-- Page specific script -->
+  <script>
+    $(function () {
+
+      $("input[data-bootstrap-switch]").each(function () {
+        console.log('TESTE', this)
+        $(this).bootstrapSwitch('state', $(this).prop('checked'));
+      })
+
+    })
+  </script>
 </body>
 
 </html>

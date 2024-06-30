@@ -1,7 +1,19 @@
 import classNames from 'classnames'
 import { colors } from '../../../configs'
 
-const InputText = ({ type = 'text', id, name, disabled = false, icon, error, value, onChange = () => {}, ...res }) => {
+const InputText = ({
+	type = 'text',
+	id,
+	name,
+	disabled = false,
+	icon,
+	error,
+	value,
+	minLength = '0',
+	maxLength = '255',
+	onChange = () => {},
+	...res
+}) => {
 	const rand = Math.floor(Math.random())
 	return (
 		<>
@@ -17,6 +29,8 @@ const InputText = ({ type = 'text', id, name, disabled = false, icon, error, val
 					disabled={disabled}
 					onChange={onChange}
 					value={value}
+					minLength={minLength}
+					maxLength={maxLength}
 					{...res}
 					className={classNames('form-control', res.class, res.className)}
 					data-target={`#${rand}`}

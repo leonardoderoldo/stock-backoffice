@@ -10,6 +10,8 @@ export default function Step2({ formik = {} }) {
 							<InputText
 								id="name"
 								name="name"
+								minLength="3"
+								maxLength="30"
 								placeholder="Nome da categoria"
 								value={formik.values.name}
 								error={formik.errors.name}

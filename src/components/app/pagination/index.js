@@ -15,7 +15,7 @@ const Pagination = ({ step = 0, stepsSize = 0 }) => {
 					])}
 					style={{ height: 35, width: 35 }}
 				>
-					{e}
+					{e + 1}
 				</div>
 			))}
 		</div>

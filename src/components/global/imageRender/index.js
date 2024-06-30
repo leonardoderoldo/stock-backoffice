@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import classNames from 'classnames'
+
 import { colors, metrics } from '../../../configs'
 
 const ImageRender = ({
@@ -28,10 +30,11 @@ const ImageRender = ({
 	return (
 		<div
 			title={alt}
-			className="border d-flex"
+			className="border d-flex flex-column"
 			style={{
 				width: width,
 				height: height,
+				position: 'relative',
 				alignItems: 'center',
 				justifyContent: 'center',
 				backgroundColor: colors.primaryAlpha60,
@@ -61,6 +64,8 @@ const ImageRender = ({
 					className={['m-0', props.class, props.className, props.imgClassName]}
 				/>
 			)}
+
+			<div className={classNames(['w-100 h-100 position-absolute', props.childrenClass])}>{props.children}</div>
 		</div>
 	)
 }

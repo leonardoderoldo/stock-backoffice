@@ -6,7 +6,7 @@ import { Buttom, Card, Col, Row } from '../../components/global'
 import { ModalContext, RestaurantContext } from '../../contexts'
 
 export default function Menu() {
-	const { openMenuCreate } = useContext(ModalContext)
+	const { openCatalogCreate, openCategoryCreate } = useContext(ModalContext)
 	const { catalog, getCatalog } = useContext(RestaurantContext)
 
 	const list = () => {
@@ -25,7 +25,7 @@ export default function Menu() {
 						<div className="card">
 							<div className="card-header">
 								<div className="card-title mb-0">
-									<Buttom onClick={() => openMenuCreate(catalog?.externalId)}>
+									<Buttom onClick={() => openCatalogCreate(catalog?.externalId)}>
 										<i className="fas fa-plus mr-1" />
 										Nova categoria
 									</Buttom>
@@ -68,7 +68,7 @@ export default function Menu() {
 													</h4>
 												</Col>
 												<Col className="col-5 d-flex flex-row col-2 d-flex justify-content-end">
-													<Buttom>
+													<Buttom onClick={() => openCategoryCreate(e.externalId)}>
 														<i className="fas fa-plus mr-1" />
 														Adicionar item
 													</Buttom>

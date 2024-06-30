@@ -1,9 +1,10 @@
 import { createContext, useState } from 'react'
 
-import { ModalCategoryCreate } from '../components/app'
+import { ModalCategoryCreate, ModalProductCreate } from '../components/app'
 
 const ModalContext = createContext({
-	openMenuCreate: () => {}
+	openCatalogCreate: () => {},
+	openCategoryCreate: () => {}
 })
 
 export const ModalProvider = ({ children }) => {
@@ -13,29 +14,42 @@ export const ModalProvider = ({ children }) => {
 	//####################################################################################
 
 	const [currentCatalogId, setCurrentCatalogId] = useState()
+	const [currentCategoryId, setCurrentCategoryId] = useState()
 
 	//####################################################################################
 	//################ ACTIONS ###########################################################
 	//####################################################################################
 	//####################################################################################
-	const [showMenuCreate, setShowMenuCreate] = useState(false)
+	const [showCatalogCreate, setShowCatalogCreate] = useState(false)
+	const [showCategoryCreate, setShowCategoryCreate] = useState(false)
 
-	const openMenuCreate = (catalogId) => {
+	const openCatalogCreate = (catalogId) => {
 		setCurrentCatalogId(catalogId)
-		setShowMenuCreate(true)
+		setShowCatalogCreate(true)
+	}
+
+	const openCategoryCreate = (categoryId) => {
+		setCurrentCategoryId(categoryId)
+		setShowCategoryCreate(true)
 	}
 
 	return (
 		<>
 			<ModalContext.Provider
 				value={{
-					openMenuCreate
+					openCatalogCreate,
+					openCategoryCreate
 				}}
 			>
 				<ModalCategoryCreate
 					catalogId={currentCatalogId}
-					show={showMenuCreate}
-					onClose={() => setShowMenuCreate(false)}
+					show={showCatalogCreate}
+					onClose={() => setShowCatalogCreate(false)}
+				/>
+				<ModalProductCreate
+					categoryId={currentCategoryId}
+					show={showCategoryCreate}
+					onClose={() => setShowCategoryCreate(false)}
 				/>
 				{children}
 			</ModalContext.Provider>

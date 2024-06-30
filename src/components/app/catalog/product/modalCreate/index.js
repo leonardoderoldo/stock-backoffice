@@ -2,13 +2,14 @@ import { useContext, useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 
 import { Buttom, Modal } from '../../../../global'
+import Pagination from '../../../pagination'
+import { RestaurantContext } from '../../../../../contexts'
 
 import Step1 from './steps/step1'
 import Step2 from './steps/step2'
+import Step3 from './steps/step3'
 
 import validacao from './validacao'
-import Pagination from '../../../pagination'
-import { RestaurantContext } from '../../../../../contexts'
 
 const STEPS = [
 	{
@@ -17,17 +18,22 @@ const STEPS = [
 		component: (formik) => <Step1 formik={formik} />
 	},
 	{
-		order: 2,
+		order: 1,
 		title: 'Step 02',
 		component: (formik) => <Step2 formik={formik} />
+	},
+	{
+		order: 1,
+		title: 'Step 03',
+		component: (formik) => <Step3 formik={formik} />
 	}
 ]
 
-const ModalCategoryCreate = ({ show = false, catalogId = '', onChange = () => {}, onClose = () => {} }) => {
+export default function ModalProductCreate({ show = false, categoryId, onChange = () => {}, onClose = () => {} }) {
 	const [modalShow, setModalShow] = useState(show)
 	const [currentStep, setCurrentStep] = useState(1)
 
-	const { createCategory } = useContext(RestaurantContext)
+	const { createProduct } = useContext(RestaurantContext)
 
 	const close = () => {
 		formik.resetForm()
@@ -40,7 +46,9 @@ const ModalCategoryCreate = ({ show = false, catalogId = '', onChange = () => {}
 
 	const formik = useFormik({
 		validationSchema: validacao(currentStep),
-		initialValues: {},
+		initialValues: {
+			serving: 'NOT_APPLICABLE'
+		},
 		onSubmit: (values) => {
 			if (currentStep < STEPS.length) {
 				nextStep()
@@ -48,7 +56,7 @@ const ModalCategoryCreate = ({ show = false, catalogId = '', onChange = () => {}
 			}
 			if (!formik.isValid) return
 
-			createCategory(catalogId, values).then(() => {
+			createProduct(categoryId, values).then(() => {
 				change()
 				close()
 			})
@@ -65,6 +73,12 @@ const ModalCategoryCreate = ({ show = false, catalogId = '', onChange = () => {}
 	}
 
 	useEffect(() => {
+		if (categoryId) {
+			formik.setFieldValue('categoryId', categoryId)
+		}
+	}, [categoryId])
+
+	useEffect(() => {
 		if (show) {
 			setCurrentStep(1)
 			setModalShow(show)
@@ -72,12 +86,12 @@ const ModalCategoryCreate = ({ show = false, catalogId = '', onChange = () => {}
 	}, [show])
 
 	// Verify modal is show
-	if (!show) return <></>
+	if (!show && !categoryId) return <></>
 
 	return (
-		<Modal title="Nova categoria" size="lg" show={modalShow} onClose={() => close()}>
+		<Modal title="Novo Produto" size="xl" show={modalShow} onClose={() => close()}>
 			<form onSubmit={formik.handleSubmit}>
-				<div className="modal-body pb-0 pt-0">{STEPS[currentStep - 1].component(formik)}</div>
+				<div className="modal-body pb-0 pt-0">{STEPS[currentStep - 1]?.component(formik)}</div>
 				<div className="modal-footer justify-content-between">
 					<div className="d-flex flex-row">
 						<Buttom
@@ -112,5 +126,3 @@ const ModalCategoryCreate = ({ show = false, catalogId = '', onChange = () => {}
 		</Modal>
 	)
 }
-
-export default ModalCategoryCreate
